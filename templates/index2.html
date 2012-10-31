@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+{% block title %}Show off my variables!{% endblock %}
+{% block body %}
+<p>Index with variables</p>
+<p>var1: {{ var1 }}</p>
+<p>var2: {{ var2 }}</p>
+<p>list_var:
+<ol>
+    {% for i in list_var %}
+        {{ i }}
+    {% endfor %}
+</ol>
+{% endblock body %}
