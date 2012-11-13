@@ -1,0 +1,18 @@
+{% extends 'softball/base.html' %}
+
+{% block title %}Players{% endblock %}
+
+{% block body %}
+{% for team in teams %}
+   <table>
+     <tr>
+       <th>Name</th>
+       <th># of Players</th>
+     </tr>
+     <tr>
+       <td>{{ team.players }}</td>
+       <td>{{ team.players.all.count }}</td>
+     </tr>
+   {% endfor %}
+   </table>
+{% endblock %}
