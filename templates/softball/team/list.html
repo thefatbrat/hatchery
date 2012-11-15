@@ -3,16 +3,28 @@
 {% block title %}Teams{% endblock %}
 
 {% block body %}
-{% for team in teams %}
-   <table>
-     <tr>
-       <th>Name</th>
-       <th># of Players</th>
-     </tr>
-     <tr>
-       <td>{{ team.name }}</td>
-       <td>{{ team.players.all.count }}</td>
-     </tr>
-   {% endfor %}
-   </table> 
+<table class="table table-striped table-condensed table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th class="right"># Players</th>
+      <th class="right"># Games</th>
+      <th class="right">Wins</th>
+      <th class="right">Losses</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for team in teams %}
+    <tr>
+      <td><a href="{% url team_view team_id=team.pk %}">{{ team.name }}</a></td>
+      <td class="right">{{ team.players.count }}</td>
+      <td class="right">{{ team.rosters.count }}</td>
+      {% with record=team.record %}
+      <td class="right">{{ record.0 }}</td>
+      <td class="right">{{ record.1 }}</td>
+      {% endwith %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}

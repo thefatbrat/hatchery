@@ -3,15 +3,15 @@
 {% block title %}Players{% endblock %}
 
 {% block body %}
-{% for team in teams %}
+{% for player in players %}
    <table>
      <tr>
        <th>Name</th>
        <th># of Players</th>
      </tr>
      <tr>
-       <td>{{ team.players }}</td>
-       <td>{{ team.players.all.count }}</td>
+       <td>{{ players.team }}</td>
+       <td>{{ players.all.count }}</td>
      </tr>
    {% endfor %}
    </table>
