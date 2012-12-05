@@ -7,4 +7,5 @@ urlpatterns = patterns('',
     url(r'^team/$', 'softball.views.team_list', name='team_list'),
     url(r'^team/(?P<team_id>\d+)/$', 'softball.views.team_view', name='team_view'),
     url(r'^player/$', 'softball.views.player_list', name='player_list'),
+    url(r'^game/$', 'softball.views.game_list', name='game_list'),
 )
