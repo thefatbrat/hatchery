@@ -22,7 +22,7 @@ class Player(django.db.models.Model):
     updated_on = django.db.models.DateTimeField(auto_now=True)
     name = django.db.models.CharField(max_length=150, unique=True)
     number = django.db.models.PositiveIntegerField()
-    team = django.db.models.ForeignKey('Team', related_name='players')
+    team = django.db.models.ForeignKey('Team', related_name='players', on_delete=django.db.models.CASCADE )
 
     class Meta:
         ordering = ["name", ]
@@ -203,7 +203,7 @@ class Game(django.db.models.Model):
 class Roster(django.db.models.Model):
     created_on = django.db.models.DateTimeField(auto_now_add=True)
     updated_on = django.db.models.DateTimeField(auto_now=True)
-    team = django.db.models.ForeignKey('Team', related_name='rosters')
+    team = django.db.models.ForeignKey('Team', related_name='rosters', on_delete=django.db.models.CASCADE)
 
 
     def __unicode__(self):

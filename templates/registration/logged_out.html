@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Logout{% endblock %}
+
+{% block body %}
+    <div class="row-fluid">
+        <div class="span12">
+            <h1>You have been logged out</h1>
+            <a href="{% url login %}">Login again</a>
+        </div>
+    </div>
+{% endblock %}

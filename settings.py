@@ -20,12 +20,18 @@ DATABASES = {
     }
 }
 
+LOGIN_URL = "/andy/accounts/login/"
+
+LOGIN_REDIRECT_URL = "/andy/softball/"
+
+USE_X_FORWARDED_HOST = True
 TIME_ZONE = 'UTC'
 SITE_ID = 1
 LANGUAGE_CODE = 'en-us'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+APPEND_SLASH = True
 
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
 MEDIA_URL = '/media/'
@@ -54,11 +60,27 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (os.path.join(PROJECT_PATH, 'templates'),)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.contrib.messages.context_processors.messages',
+    'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
+)
+
+MESSAGE_STORAGE = (
+    'django.contrib.messages.storage.session.SessionStorage'
+)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -70,6 +92,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'project',
     'softball',
+    'django.contrib.messages',
 )
 
 LOGGING = {
@@ -100,3 +123,5 @@ LOGGING = {
         },
     }
 }
+
+MANDRILL_API_KEY = 'acefe6c5-538b-4851-a743-f70f849b1ef6'

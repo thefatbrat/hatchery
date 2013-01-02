@@ -1,0 +1,77 @@
+{% load softball_tags %}
+
+<table class="table table-striped table-condensed table-hover">
+    <thead>
+        <tr>
+            <th class="center">Del</th>
+            <th>Player Name</th>
+            <th>Number</th>
+            <th class="right statistic">AB</th>
+            <th class="right statistic">R</th>
+            <th class="right statistic">H</th>
+            <th class="right statistic">RBI</th>
+            <th class="right statistic">BB</th>
+            <th class="right statistic">SO</th>
+            <th class="right statistic">1B</th>
+            <th class="right statistic">2B</th>
+            <th class="right statistic">3B</th>
+            <th class="right statistic">HR</th>
+            <th class="right statistic">AVG</th>
+            <th class="right statistic">OBP</th>
+            <th class="right statistic">SLUG</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ player_formset.management_form }}
+            {% if form.non_field_errors %}
+                <tr class="error">
+                    <td colspan="15">
+                        {{ form.non_field_errors|join:", "|escape }}
+                    </td>
+                </tr>
+            {% endif %}
+            <tr class="{% if form.non_field_errors %}error{% endif %}">
+                <td class="center {% if form.DELETE.errors %}error{% endif %}
+                ">
+                    {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+                    {{ form.id }}
+                    {{ form.DELETE }}
+                    {% if form.DELETE.errors %}
+                        <br/>
+                        <span class="text-error">
+                            {{ form.DELETE.errors|join:", " }}
+                        </span>
+                    {% endif %}
+                </td>
+                {% for field in form.visible_fields %}
+                    {% if field.name != "DELETE" %}
+                    <td class="{{ field.name }} {% if field.errors %}error{% endif %}">
+                        {{ field }}
+                        {% if field.errors %}
+                            <br/>
+                            <span class="text-error">
+                                {{ field.errors|join:", " }}
+                            </span>
+                        {% endif %}
+                    </td>
+                    {% endif %}
+                {% endfor %}
+                <td class="right">{{ form.instance.at_bats|default:"-" }}</td>
+                <td class="right">{{ form.instance.runs|default:"-" }}</td>
+                <td class="right">{{ form.instance.hits|default:"-" }}</td>
+                <td class="right">{{ form.instance.rbis|default:"-" }}</td>
+                <td class="right">{{ form.instance.walks|default:"-" }}</td>
+                <td class="right">{{ form.instance.strikeouts|default:"-" }}</td>
+                <td class="right">{{ form.instance.singles|default:"-" }}</td>
+                <td class="right">{{ form.instance.doubles|default:"-" }}</td>
+                <td class="right">{{ form.instance.triples|default:"-" }}</td>
+                <td class="right">{{ form.instance.home_runs|default:"-" }}</td>
+                <td class="right">{{ form.instance.batting_average|fraction_only|default:"-" }}</td>
+                <td class="right">{{ form.instance.on_base_percentage|fraction_only|default:"-" }}</td>
+                <td class="right">{{ form.instance.slugging_percentage|fraction_only|default:"-" }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

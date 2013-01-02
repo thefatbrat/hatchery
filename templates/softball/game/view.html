@@ -1,0 +1,85 @@
+{% extends 'softball/base.html' %}
+
+{% block title %}
+    Game: {{ away_roster.team.name }} vs. {{ home_roster.team }}
+    on {{ game.played_on }}
+{% endblock %}
+
+{% block body %}
+    <div class="row-fluid">
+        <div class="span6">
+            <h1>
+                {{ away_roster.team.name }} <span class="muted">{{ game.away_score }}</span>
+                {{ home_roster.team }} <span class="muted">{{ game.home_score }}</span>
+            </h1>
+            <p>{{ game.location }} / {{ game.played_on }}</p>
+        </div>
+        <div class="span2">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th class="right">R</th>
+                        <th class="right">H</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <nobr>
+                            {{ away_roster.team.name }}
+                            {% if game.winner == away_roster.team %}
+                                <i style="vertical-align: baseline;" class="icon-ok"></i>
+                            {% endif %}
+                            </nobr>
+                        </td>
+                        <td class="right">{{ game.away_score }}</td>
+                        <td class="right"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <nobr>
+                            {{ home_roster.team.name }}
+                            {% if game.winner == home_roster.team %}
+                                <i style="vertical-align: baseline;" class="icon-ok"></i>
+                            {% endif %}
+                            </nobr>
+                        </td>
+                        <td class="right">{{ game.home_score }}</td>
+                        <td class="right"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span4">
+            <p class="right">
+               {% if perms.softball.delete_game %}
+                <a class="btn btn-danger" href="{% url game_delete game_id=game.id %}">
+                    Delete Game</a>
+               {% endif %}
+	       {% if perms.softball.change_game %}
+                <a class="btn" href="{% url game_edit game_id=game.id %}">Edit Game</a>
+               {% endif %}
+            </p>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <h3>
+                <a href="{% url team_view team_id=away_roster.team.id %}">
+                    {{ away_roster.team.name }}</a> <small>Away</small>
+            </h3>
+            {% include "softball/game/part.roster_list.html" with roster=away_roster %}
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <h3>
+                <a href="{% url team_view team_id=home_roster.team.id %}">
+                    {{ home_roster.team.name }}</a> <small>Home</small></h3>
+            {% include "softball/game/part.roster_list.html" with roster=home_roster %}
+        </div>
+    </div>
+{% endblock %}

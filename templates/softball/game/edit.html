@@ -1,0 +1,107 @@
+{% extends 'softball/base.html' %}
+
+{% block title %}
+    Edit Game: {{ away_roster.team.name }} vs. {{ home_roster.team }}
+    on {{ game.played_on }}
+{% endblock %}
+
+{% block body %}
+<div class="page-header">
+    <h1>Edit Game</h1>
+</div>
+
+<form action="" method="post" class="form-horizontal">
+    <div class="row-fluid">
+        <div class="span12">
+            {% csrf_token %}
+
+            {% for hidden in game_form.hidden_fields %}{{ hidden }}{% endfor %}
+
+            {% if game_form.non_field_errors %}
+                <ol>
+                {% for error in game_form.non_field_errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+                </ol>
+            {% endif %}
+
+            {# played_on #}
+            <div class="control-group {% if game_form.played_on.errors %}error{% endif %}">
+                <label class="control-label {{ game_form.played_on.css_classes }}" for="{{ game_form.played_on.auto_id }}">
+                    {{ game_form.played_on.label }}{% if game_form.played_on.field.required %}*{% endif %}
+                </label>
+                <div class="controls">
+                    {{ game_form.played_on }}
+                    <span class="help-inline">
+                        {{ form.played_on.errors|join:", "|escape }}
+                    </span>
+                    {% if form.played_on.help_text %}
+                        <br/>
+                        <span class="help-inline muted">
+                            {{ form.played_on.help_text|escape }}
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+
+            {# location #}
+            <div class="control-group {% if game_form.location.errors %}error{% endif %}">
+                <label class="control-label {{ game_form.location.css_classes }}" for="{{ game_form.location.auto_id }}">
+                    {{ game_form.location.label }}{% if game_form.location.field.required %}*{% endif %}
+                </label>
+                <div class="controls">
+                    {{ game_form.location }}
+                    <span class="help-inline">
+                        {{ game_form.location.errors|join:", "|escape }}
+                    </span>
+                    {% if game_form.location.help_text %}
+                        <br/>
+                        <span class="help-inline muted">
+                            {{ game_form.location.help_text|escape }}
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <h3>Away Team</h3>
+            <div class="{% if game_form.away_team.errors %}error{% endif %}">
+                {{ game_form.away_team }}
+                <span class="help-inline {% if game_form.away_team.errors %}text-error{% endif %}">
+                    {% if game_form.away_team.errors %}
+                        {{ game_form.away_team.errors|join:", "|escape }}
+                    {% else %}
+                        <em>{{ game_form.away_team.help_text|escape }}</em>
+                    {% endif %}
+                </span>
+            </div>
+            {% include "softball/game/part.roster_form.html" with statistic_formset=away_statistic_formset %}
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <h3>Home Time</h3>
+            <div class="{% if game_form.home_team.errors %}error{% endif %}">
+                {{ game_form.home_team }}
+                <span class="help-inline {% if game_form.home_team.errors %}text-error{% endif %}">
+                    {% if game_form.home_team.errors %}
+                        {{ game_form.home_team.errors|join:", "|escape }}
+                    {% else %}
+                        {{ game_form.home_team.help_text|escape }}
+                    {% endif %}
+                </span>
+            </div>
+            {% include "softball/game/part.roster_form.html" with statistic_formset=home_statistic_formset %}
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Update Game</button>
+        <a class="btn" href="{% url game_view game_id=game.id %}">Cancel</a>
+    </div>
+</form>
+{% endblock %}

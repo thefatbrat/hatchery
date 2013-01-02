@@ -1,0 +1,7 @@
+{{ field}}
+{% if field.errors %}
+    <br/>
+    <span class="text-error">
+        {{ field.errors|join:", "|escape }}
+    </span>
+{% endif %}

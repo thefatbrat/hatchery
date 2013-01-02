@@ -1,0 +1,23 @@
+{% extends 'softball/base.html' %}
+
+{% block title %}Add Game{% endblock %}
+
+{% block body %}
+<div class="page-header">
+    <h1>Add Game</h1>
+</div>
+
+<form action="" method="post" class="form-horizontal">
+    <div class="row-fluid">
+        <div class="span12">
+            {% with game_form as form %}
+                {% include "softball/include_form.html" %}
+            {% endwith %}
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Add Game</button>
+                <a class="btn" href="{% url game_list %}">Cancel</a>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'softball/base.html' %}
+
+{% block title %}Player: {{ player.name }}{% endblock %}
+
+{% block body %}
+<div class="page-header">
+    {% if player.owned_by == user %}
+    <p class="pull-right">
+        {% if perms.softball.delete_player %}
+            <a class="btn btn-danger" href="{% url player_delete player_id=player.id %}">
+                Delete Player</a>
+        {% endif %}
+        {% if perms.softball.change_player %}
+        <a class="btn" href="{% url player_edit player_id=player.id %}">
+            Edit Player</a>
+        {% endif %}
+    </p>
+    {% endif %}
+    <h1>
+        {{ player.name }}
+        <small>
+            #{{ player.number }}
+            <a href="{% url team_view team_id=player.team.id %}">
+                <strong>{{ player.team.name }}</strong>
+            </a>
+        </small>
+    </h1>
+</div>
+
+<div class="row-fluid">
+    <div class="span12">
+        <h3>Games</h3>
+        {% include "softball/player/part.player_statistics.html" with statistics=player.statistics %}
+    </div>
+</div>
+{% endblock %}
